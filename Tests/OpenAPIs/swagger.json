@@ -1,0 +1,346 @@
+{
+  "x-generator": "NSwag v13.15.5.0 (NJsonSchema v10.6.6.0 (Newtonsoft.Json v13.0.0.0))",
+  "openapi": "3.0.0",
+  "info": {
+    "title": "My Title",
+    "version": "1.0.0"
+  },
+  "servers": [
+    {
+      "url": "https://localhost:7173"
+    }
+  ],
+  "paths": {
+    "/api/cookwares": {
+      "get": {
+        "tags": [
+          "Cookware"
+        ],
+        "operationId": "Cookware_GetCookwares",
+        "parameters": [
+          {
+            "name": "name",
+            "in": "query",
+            "schema": {
+              "type": "string",
+              "nullable": true
+            },
+            "x-position": 1
+          },
+          {
+            "name": "searchQuery",
+            "in": "query",
+            "schema": {
+              "type": "string",
+              "nullable": true
+            },
+            "x-position": 2
+          },
+          {
+            "name": "pageNumber",
+            "in": "query",
+            "schema": {
+              "type": "integer",
+              "format": "int32",
+              "default": 1
+            },
+            "x-position": 3
+          },
+          {
+            "name": "pageSize",
+            "in": "query",
+            "schema": {
+              "type": "integer",
+              "format": "int32",
+              "default": 10
+            },
+            "x-position": 4
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Ok",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/CookwareDto"
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "post": {
+        "tags": [
+          "Cookware"
+        ],
+        "operationId": "Cookware_CreateCookWare",
+        "requestBody": {
+          "x-name": "cookware",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/CookwareForCreationDto"
+              }
+            }
+          },
+          "required": true,
+          "x-position": 1
+        },
+        "responses": {
+          "201": {
+            "description": "Created",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/CookwareDto"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/cookwares/{id}": {
+      "get": {
+        "tags": [
+          "Cookware"
+        ],
+        "operationId": "Cookware_GetCookware",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            },
+            "x-position": 1
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Ok",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/CookwareDto"
+                }
+              }
+            }
+          }
+        }
+      },
+      "put": {
+        "tags": [
+          "Cookware"
+        ],
+        "operationId": "Cookware_UpdateCookware",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            },
+            "x-position": 1
+          }
+        ],
+        "requestBody": {
+          "x-name": "cookware",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/CookwareForUpdateDto"
+              }
+            }
+          },
+          "required": true,
+          "x-position": 2
+        },
+        "responses": {
+          "204": {
+            "description": "NoContent"
+          }
+        }
+      },
+      "patch": {
+        "tags": [
+          "Cookware"
+        ],
+        "operationId": "Cookware_PartiallyUpdateCookware",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            },
+            "x-position": 1
+          }
+        ],
+        "requestBody": {
+          "x-name": "patchDocument",
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "array",
+                "items": {
+                  "$ref": "#/components/schemas/Operation"
+                }
+              }
+            }
+          },
+          "required": true,
+          "x-position": 2
+        },
+        "responses": {
+          "204": {
+            "description": "NoContent"
+          }
+        }
+      },
+      "delete": {
+        "tags": [
+          "Cookware"
+        ],
+        "operationId": "Cookware_DeleteCookware",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            },
+            "x-position": 1
+          }
+        ],
+        "responses": {
+          "204": {
+            "description": "NoContent"
+          }
+        }
+      }
+    }
+  },
+  "components": {
+    "schemas": {
+      "CookwareDto": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "id": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "name": {
+            "type": "string"
+          },
+          "color": {
+            "$ref": "#/components/schemas/Color"
+          }
+        }
+      },
+      "Color": {
+        "type": "string",
+        "description": "",
+        "x-enumNames": [
+          "silver",
+          "black",
+          "blue",
+          "red",
+          "pink",
+          "white"
+        ],
+        "enum": [
+          "silver",
+          "black",
+          "blue",
+          "red",
+          "pink",
+          "white"
+        ]
+      },
+      "CookwareForCreationDto": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "name",
+          "color"
+        ],
+        "properties": {
+          "name": {
+            "type": "string",
+            "maxLength": 50,
+            "minLength": 1
+          },
+          "color": {
+            "$ref": "#/components/schemas/Color"
+          }
+        }
+      },
+      "CookwareForUpdateDto": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "name",
+          "color"
+        ],
+        "properties": {
+          "name": {
+            "type": "string",
+            "maxLength": 50,
+            "minLength": 1
+          },
+          "color": {
+            "$ref": "#/components/schemas/Color"
+          }
+        }
+      },
+      "Operation": {
+        "allOf": [
+          {
+            "$ref": "#/components/schemas/OperationBase"
+          },
+          {
+            "type": "object",
+            "additionalProperties": false,
+            "properties": {
+              "value": {
+                "nullable": true
+              }
+            }
+          }
+        ]
+      },
+      "OperationBase": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "path": {
+            "type": "string",
+            "nullable": true
+          },
+          "op": {
+            "type": "string",
+            "nullable": true
+          },
+          "from": {
+            "type": "string",
+            "nullable": true
+          }
+        }
+      }
+    }
+  }
+}
