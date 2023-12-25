@@ -3,12 +3,16 @@ using Cooking.API.Models;
 using Cooking.API.Services;
 using Microsoft.AspNetCore.JsonPatch;
 using Microsoft.AspNetCore.Mvc;
+using NSwag.Annotations;
+using System.Net;
 using System.Text.Json;
 
 namespace Cooking.API.Controllers
 {
     [ApiController]
     [Route("api/cookwares")]
+    [Produces("application/json")]
+    [Consumes("application/json")]
     public class CookwareController : ControllerBase
     {
         private readonly ICookingRepository _cookingRepository;
@@ -22,6 +26,7 @@ namespace Cooking.API.Controllers
         }
 
         [HttpGet]
+        [ResponseType(typeof(IEnumerable<CookwareDto>), Description = "Ok", HttpStatusCode = "200")]
         public async Task<ActionResult<IEnumerable<CookwareDto>>> GetCookwares(string? name, string? searchQuery, int pageNumber = 1, int pageSize = 10)
         {
             if(pageSize > maxCookwarePageSize)
@@ -34,6 +39,7 @@ namespace Cooking.API.Controllers
         }
 
         [HttpGet("{id}", Name = "GetCookware")]
+        [ResponseType(typeof(CookwareDto), Description = "Ok", HttpStatusCode = "200")]
         public async Task<ActionResult<CookwareDto>> GetCookware(int id)
         {
             var cookware = await _cookingRepository.GetCookwareAsync(id);
@@ -45,6 +51,7 @@ namespace Cooking.API.Controllers
         }
 
         [HttpPost]
+        [ResponseType(typeof (CookwareDto), Description ="Created", HttpStatusCode = "201")]
         public async Task<ActionResult<CookwareDto>> CreateCookWare(CookwareForCreationDto cookware)
         {
             var finalCookware = _mapper.Map<Entities.Cookware>(cookware);
@@ -60,6 +67,7 @@ namespace Cooking.API.Controllers
         }
 
         [HttpPut("{id}")]
+        [ResponseType(HttpStatusCode.NoContent, typeof(void), Description = "NoContent")]
         public async Task<ActionResult> UpdateCookware(int id, CookwareForUpdateDto cookware)
         {
             var cookwareEntity = await _cookingRepository.GetCookwareAsync(id);
@@ -73,6 +81,7 @@ namespace Cooking.API.Controllers
         }
 
         [HttpPatch("{id}")]
+        [ResponseType(HttpStatusCode.NoContent, typeof(void), Description = "NoContent")]
         public async Task<ActionResult> PartiallyUpdateCookware(int id, JsonPatchDocument<CookwareForUpdateDto> patchDocument)
         {
             var cookware = await _cookingRepository.GetCookwareAsync(id);
@@ -96,6 +105,7 @@ namespace Cooking.API.Controllers
         }
 
         [HttpDelete("{id}")]
+        [ResponseType(HttpStatusCode.NoContent, typeof(void), Description = "NoContent")]
         public async Task<ActionResult> DeleteCookware(int id)
         {
             var cookware = await _cookingRepository.GetCookwareAsync(id);
